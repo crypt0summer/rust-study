@@ -17,8 +17,24 @@ impl Server{
     pub fn run(self) {
         println!("Listening on {}", self.addr);
 
-        //unwrap: if true, return tcplistener, if false, panic and log error
+        //unwrap: if true, return tcplistener, if false, panic and log error (unrecoverable error)
         let listener = TcpListener::bind(&self.addr).unwrap();//Recoverable error vs Unrecoverable error
+        
+        loop {
+            match listener.accept() {
+                Ok((stream, _)) => {
+                    
+                },
+                Err(e) => println!("Failed to establish a connection: {}", e)
+            }
+          
+        }
+        // 'outer: loop {//label
+        //     loop {
+        //         continue 'outer;
+        //     }
+        // }
+
     }
 }
 
