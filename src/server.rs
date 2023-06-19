@@ -1,4 +1,5 @@
 use std::net::TcpListener;
+use std::io::Read;
 
 //Everything in Modules is private by default
 //Every file in Rust is a module
@@ -22,8 +23,15 @@ impl Server{
         
         loop {
             match listener.accept() {
-                Ok((stream, _)) => {
-                    
+                Ok((mut stream, _)) => {
+                    let mut buffer = [0; 1024];
+                    //read bytecode from stream
+                    match stream.read(&mut buffer){
+                        Ok(_)=>{
+                            println!("Received a request: {}", String::from_utf8_lossy(&buffer));
+                        },
+                        Err(e) => println!("Failed to read from connection: {}", e)
+                    }
                 },
                 Err(e) => println!("Failed to establish a connection: {}", e)
             }
