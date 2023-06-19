@@ -1,3 +1,4 @@
+use std::net::TcpListener;
 
 //Everything in Modules is private by default
 //Every file in Rust is a module
@@ -15,6 +16,9 @@ impl Server{
 
     pub fn run(self) {
         println!("Listening on {}", self.addr);
+
+        //unwrap: if true, return tcplistener, if false, panic and log error
+        let listener = TcpListener::bind(&self.addr).unwrap();//Recoverable error vs Unrecoverable error
     }
 }
 
